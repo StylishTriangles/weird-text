@@ -7,6 +7,7 @@ app = Flask(__name__)
 CORS(app)
 api = Api(app)
 
+
 class Encode(Resource):
     def post(self):
         try:
@@ -15,6 +16,7 @@ class Encode(Resource):
             response = make_response("Error: body is not valid unicode", 400)
         response.mimetype = "text/plain"
         return response
+
 
 class Decode(Resource):
     def post(self):
@@ -33,6 +35,7 @@ class Decode(Resource):
             response = make_response(str(e), 400)
         response.mimetype = "text/plain"
         return response
+
 
 api.add_resource(Encode, "/v1/encode")
 api.add_resource(Decode, "/v1/decode")

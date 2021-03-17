@@ -1,6 +1,7 @@
 # weird-text
 ## Running
 locally: `python main.py` launches a local web server
+
 remote: The app is available on https://weird-text-1112.herokuapp.com
 
 ## RESTful API
@@ -14,3 +15,5 @@ in both cases `Content-Type: text/plain` is expected and the response will also 
 Windows:
 
 `curl -Method Post "https://weird-text-1112.herokuapp.com/v1/encode" -Body "test this app!" -ContentType "text/plain; charset=UTF-8"`
+
+[Try it out online!](https://stylishtriangles.github.io/weird-text/)

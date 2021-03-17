@@ -10,13 +10,82 @@
 <title>WeirdText Encoder/Decoder</title>
 </head>
 <body>
-    <h1>Encode:</h1>
-    <form>
-        <input type="text"/>
-    </form>
-    <h1>Decode:</h1>
-    <form>
-        <input type="text"/>
-    </form>
+<main class="page-content" aria-label="Content">
+    <div class="container">
+        <h1 class="text-center text-primary">WeirdText encoder/decoder</h1>
+        <div class="card bg-light">
+            <h2 class="text-secondary m-2">Encode:</h1>
+            <form class="m-2">
+                <textarea id="text_encode" class="form-control input-lg" type="text"></textarea>
+                <button type="button" value="Submit" class="btn btn-primary mt-1" onclick="encode()">Submit</button>
+            </form>
+            <span id="encode_span" class="m-2" style="display: none;">
+                <h5 class="text-secondary">Response:</h5>
+                <div class="card">
+                    <textarea id="encode_response" class="form-control"></textarea>
+                </div>
+            </span>
+            <hr/>
+            <h2 class="text-secondary ml-2">Decode:</h1>
+            <form class="m-2">
+                <textarea id="text_decode" class="form-control input-lg" type="text"></textarea>
+                <button type="button" value="Submit" class="btn btn-primary mt-1" onclick="decode()">Submit</button>
+            </form>
+            <span id="decode_span" class="m-2" style="display: none;">
+                <h5 class="text-secondary">Response:</h5>
+                <div class="card">
+                    <textarea id="decode_response" class="form-control"></textarea>
+                </div>
+            </span>
+        </div>
+    </div>
+    
+</main>
 </body>
+<script>
+"use strict";
+const heroku_url = "https://weird-text-1112.herokuapp.com";
+const url_encode = heroku_url + "/v1/encode";
+const url_decode = heroku_url + "/v1/decode";
+function encode() {
+    var text_to_encode = $("#text_encode").val()
+    $.ajax({
+        type: 'POST',
+        url: url_encode,  
+        data: text_to_encode,
+        contentType:"text/plain; charset=utf-8" 
+    })
+    .done(function(res) {
+        $("#encode_span").show();
+        $("#encode_response").html(res).trigger("input")
+    })
+    .fail(function(data) {
+        alert(data);
+    });
+}
+
+function decode() {
+    var text_to_decode = $("#text_decode").val()
+    $.ajax({
+        type: 'POST',
+        url: url_decode, 
+        data: text_to_decode,
+        contentType:"text/plain; charset=utf-8"
+    })
+    .done(function(res) {
+        $("#decode_span").show();
+        $("#decode_response").html(res).trigger("input")
+    })
+    .fail(function(data) {
+        alert(data.responseText);
+    });
+}
+
+$("textarea").each(function () {
+  this.setAttribute("style", "height:" + (this.scrollHeight) + "px;overflow-y:hidden;");
+}).on("input", function () {
+  this.style.height = "auto";
+  this.style.height = (this.scrollHeight) + "px";
+});
+</script>
 </html>

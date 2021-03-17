@@ -1,8 +1,10 @@
 from flask import Flask, request, make_response
 from flask_restful import Resource, Api
+from flask_cors import CORS
 from encoder import encode, decode
 
 app = Flask(__name__)
+CORS(app)
 api = Api(app)
 
 class Encode(Resource):
